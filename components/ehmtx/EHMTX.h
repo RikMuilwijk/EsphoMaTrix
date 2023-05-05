@@ -28,6 +28,8 @@ namespace esphome
     std::string time_fmt;
     std::string date_fmt;
     Color indicator_color;
+    Color indicator1_color;
+    Color indicator2_color;
     Color clock_color;
     Color today_color;
     Color weekday_color;
@@ -42,6 +44,8 @@ namespace esphome
     void dump_config();
     bool show_screen;
     bool show_indicator;
+    bool show_indicator1;
+    bool show_indicator2;
     bool show_gauge;
     bool show_date;
     uint8_t gauge_value;
@@ -101,9 +105,13 @@ namespace esphome
     void set_scroll_count(uint8_t count);
     void set_duration(uint8_t d);
     void set_indicator_off();
+    void set_indicator1_off();
+    void set_indicator2_off();
     void set_time_format(std::string s);
     void set_date_format(std::string s);
     void set_indicator_on(int r, int g, int b);
+    void set_indicator1_on(int r, int g, int b);
+    void set_indicator2_on(int r, int g, int b);
     void set_gauge_off();
     void set_gauge_value(int v); // int because of register_service
     void set_gauge_color(int r, int g, int b);
@@ -276,6 +284,42 @@ template <typename... Ts>
   };
 
   template <typename... Ts>
+  class SetIndicator1On : public Action<Ts...>
+  {
+  public:
+    SetIndicator1On(EHMTX *parent) : parent_(parent) {}
+    TEMPLATABLE_VALUE(uint8_t, red)
+    TEMPLATABLE_VALUE(uint8_t, green)
+    TEMPLATABLE_VALUE(uint8_t, blue)
+
+    void play(Ts... x) override
+    {
+      this->parent_->set_indicator1_on(this->red_.value(x...), this->green_.value(x...), this->blue_.value(x...));
+    }
+
+  protected:
+    EHMTX *parent_;
+  };
+
+  template <typename... Ts>
+  class SetIndicator2On : public Action<Ts...>
+  {
+  public:
+    SetIndicator2On(EHMTX *parent) : parent_(parent) {}
+    TEMPLATABLE_VALUE(uint8_t, red)
+    TEMPLATABLE_VALUE(uint8_t, green)
+    TEMPLATABLE_VALUE(uint8_t, blue)
+
+    void play(Ts... x) override
+    {
+      this->parent_->set_indicator2_on(this->red_.value(x...), this->green_.value(x...), this->blue_.value(x...));
+    }
+
+  protected:
+    EHMTX *parent_;
+  };
+
+  template <typename... Ts>
   class SetClockColor : public Action<Ts...>
   {
   public:
@@ -406,6 +450,36 @@ template <typename... Ts>
     void play(Ts... x) override
     {
       this->parent_->set_indicator_off();
+    }
+
+  protected:
+    EHMTX *parent_;
+  };
+
+  template <typename... Ts>
+  class SetIndicator1Off : public Action<Ts...>
+  {
+  public:
+    SetIndicator1Off(EHMTX *parent) : parent_(parent) {}
+
+    void play(Ts... x) override
+    {
+      this->parent_->set_indicator1_off();
+    }
+
+  protected:
+    EHMTX *parent_;
+  };
+
+  template <typename... Ts>
+  class SetIndicator2Off : public Action<Ts...>
+  {
+  public:
+    SetIndicator2Off(EHMTX *parent) : parent_(parent) {}
+
+    void play(Ts... x) override
+    {
+      this->parent_->set_indicator2_off();
     }
 
   protected:
