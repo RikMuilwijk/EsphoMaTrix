@@ -16,6 +16,8 @@ namespace esphome
     this->gauge_color = Color(100, 100, 200);
     this->gauge_value = 0;
     this->show_indicator = false;
+    this->show_indicator1 = false;
+    this->show_indicator2 = false;
     this->icon_count = 0;
     this->last_clock_time = 0;
     this->show_icons = false;
@@ -82,6 +84,34 @@ namespace esphome
     ESP_LOGD(TAG, "indicator off");
   }
 
+  void EHMTX::set_indicator1_on(int r, int g, int b)
+  {
+    this->indicator1_color = Color((uint8_t)r & 248, (uint8_t)g & 252, (uint8_t)b & 248);
+    this->show_indicator1 = true;
+    ESP_LOGD(TAG, "indicator1 r: %d g: %d b: %d", r, g, b);
+  }
+
+  void EHMTX::set_indicator1_off()
+  {
+    this->show_indicator1 = false;
+    ESP_LOGD(TAG, "indicator1 off");
+  }
+
+---
+  void EHMTX::set_indicator2_on(int r, int g, int b)
+  {
+    this->indicator2_color = Color((uint8_t)r & 248, (uint8_t)g & 252, (uint8_t)b & 248);
+    this->show_indicator2 = true;
+    ESP_LOGD(TAG, "indicator2 r: %d g: %d b: %d", r, g, b);
+  }
+
+  void EHMTX::set_indicator2_off()
+  {
+    this->show_indicator2 = false;
+    ESP_LOGD(TAG, "indicator2 off");
+  }
+  
+  
   void EHMTX::set_display_off()
   {
     this->show_display = false;
@@ -224,6 +254,13 @@ namespace esphome
     register_service(&EHMTX::hold_screen, "hold_screen");
     register_service(&EHMTX::set_indicator_on, "indicator_on", {"r", "g", "b"});
     register_service(&EHMTX::set_indicator_off, "indicator_off");
+    
+    register_service(&EHMTX::set_indicator1_on, "indicator1_on", {"r", "g", "b"});
+    register_service(&EHMTX::set_indicator1_off, "indicator1_off");
+    
+    register_service(&EHMTX::set_indicator2_on, "indicator2_on", {"r", "g", "b"});
+    register_service(&EHMTX::set_indicator2_off, "indicator2_off");
+    
     register_service(&EHMTX::set_gauge_off, "gauge_off");
     register_service(&EHMTX::set_alarm_color, "alarm_color", {"r", "g", "b"});
     register_service(&EHMTX::set_text_color, "text_color", {"r", "g", "b"});
@@ -353,6 +390,26 @@ namespace esphome
     {
       ESP_LOGI(TAG, "status indicator off");
     }
+    
+    if (this->show_indicator1)
+    {
+      ESP_LOGI(TAG, "status indicator1 on");
+    }
+    else
+    {
+      ESP_LOGI(TAG, "status indicator1 off");
+    }
+
+    if (this->show_indicator2)
+    {
+      ESP_LOGI(TAG, "status indicator2 on");
+    }
+    else
+    {
+      ESP_LOGI(TAG, "status indicator2 off");
+    }
+  
+    
     if (this->show_display)
     {
       ESP_LOGI(TAG, "status display on");
@@ -639,6 +696,18 @@ namespace esphome
         this->display->draw_pixel_at(30, 7, this->indicator_color);
         this->display->draw_pixel_at(31, 6, this->indicator_color);
         this->display->draw_pixel_at(31, 7, this->indicator_color);
+      }
+
+      if (this->show_indicator1)
+      {
+        this->display->draw_pixel_at(5, 7, this->indicator1_color);
+        this->display->draw_pixel_at(6, 7, this->indicator1_color);
+      }
+
+      if (this->show_indicator2)
+      {
+        this->display->draw_pixel_at(10, 7, this->indicator2_color);
+        this->display->draw_pixel_at(11, 7, this->indicator2_color);
       }
     }
   }
