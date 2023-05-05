@@ -97,7 +97,6 @@ namespace esphome
     ESP_LOGD(TAG, "indicator1 off");
   }
 
----
   void EHMTX::set_indicator2_on(int r, int g, int b)
   {
     this->indicator2_color = Color((uint8_t)r & 248, (uint8_t)g & 252, (uint8_t)b & 248);
