@@ -406,6 +406,42 @@ async def ehmtx_set_indicator_on_action_to_code(config, action_id, template_arg,
 
     return var
 
+SetIndicator1OnAction = ehmtx_ns.class_("SetIndicator1On", automation.Action)
+
+@automation.register_action(
+    "ehmtx.indicator1.on", SetIndicator1OnAction, SET_COLOR_ACTION_SCHEMA
+)
+async def ehmtx_set_indicator1_on_action_to_code(config, action_id, template_arg, args):
+    paren = await cg.get_variable(config[CONF_ID])
+
+    var = cg.new_Pvariable(action_id, template_arg, paren)
+    template_ = await cg.templatable(config[CONF_RED], args, cg.int_)
+    cg.add(var.set_red(template_))
+    template_ = await cg.templatable(config[CONF_GREEN], args, cg.int_)
+    cg.add(var.set_green(template_))
+    template_ = await cg.templatable(config[CONF_BLUE], args, cg.int_)
+    cg.add(var.set_blue(template_))
+
+    return var
+
+SetIndicator2OnAction = ehmtx_ns.class_("SetIndicator2On", automation.Action)
+
+@automation.register_action(
+    "ehmtx.indicator2.on", SetIndicator2OnAction, SET_COLOR_ACTION_SCHEMA
+)
+async def ehmtx_set_indicator2_on_action_to_code(config, action_id, template_arg, args):
+    paren = await cg.get_variable(config[CONF_ID])
+
+    var = cg.new_Pvariable(action_id, template_arg, paren)
+    template_ = await cg.templatable(config[CONF_RED], args, cg.int_)
+    cg.add(var.set_red(template_))
+    template_ = await cg.templatable(config[CONF_GREEN], args, cg.int_)
+    cg.add(var.set_green(template_))
+    template_ = await cg.templatable(config[CONF_BLUE], args, cg.int_)
+    cg.add(var.set_blue(template_))
+
+    return var
+
 DELETE_SCREEN_ACTION_SCHEMA = cv.Schema(
     {
         cv.GenerateID(): cv.use_id(EHMTX_),
@@ -453,6 +489,40 @@ INDICATOR_OFF_ACTION_SCHEMA = cv.Schema(
     "ehmtx.indicator.off", SetIndicatorOffAction, INDICATOR_OFF_ACTION_SCHEMA
 )
 async def ehmtx_set_indicator_off_action_to_code(config, action_id, template_arg, args):
+    paren = await cg.get_variable(config[CONF_ID])
+    var = cg.new_Pvariable(action_id, template_arg, paren)
+
+    return var
+
+SetIndicator1OffAction = ehmtx_ns.class_("SetIndicator1Off", automation.Action)
+
+INDICATOR1_OFF_ACTION_SCHEMA = cv.Schema(
+    {
+        cv.GenerateID(): cv.use_id(EHMTX_),
+    }
+)
+
+@automation.register_action(
+    "ehmtx.indicator1.off", SetIndicator1OffAction, INDICATOR1_OFF_ACTION_SCHEMA
+)
+async def ehmtx_set_indicator1_off_action_to_code(config, action_id, template_arg, args):
+    paren = await cg.get_variable(config[CONF_ID])
+    var = cg.new_Pvariable(action_id, template_arg, paren)
+
+    return var
+
+SetIndicator2OffAction = ehmtx_ns.class_("SetIndicator2Off", automation.Action)
+
+INDICATOR2_OFF_ACTION_SCHEMA = cv.Schema(
+    {
+        cv.GenerateID(): cv.use_id(EHMTX_),
+    }
+)
+
+@automation.register_action(
+    "ehmtx.indicator2.off", SetIndicator2OffAction, INDICATOR2_OFF_ACTION_SCHEMA
+)
+async def ehmtx_set_indicator2_off_action_to_code(config, action_id, template_arg, args):
     paren = await cg.get_variable(config[CONF_ID])
     var = cg.new_Pvariable(action_id, template_arg, paren)
 
