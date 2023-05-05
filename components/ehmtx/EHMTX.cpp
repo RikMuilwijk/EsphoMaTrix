@@ -253,13 +253,10 @@ namespace esphome
     register_service(&EHMTX::hold_screen, "hold_screen");
     register_service(&EHMTX::set_indicator_on, "indicator_on", {"r", "g", "b"});
     register_service(&EHMTX::set_indicator_off, "indicator_off");
-    
     register_service(&EHMTX::set_indicator1_on, "indicator1_on", {"r", "g", "b"});
     register_service(&EHMTX::set_indicator1_off, "indicator1_off");
-    
     register_service(&EHMTX::set_indicator2_on, "indicator2_on", {"r", "g", "b"});
     register_service(&EHMTX::set_indicator2_off, "indicator2_off");
-    
     register_service(&EHMTX::set_gauge_off, "gauge_off");
     register_service(&EHMTX::set_alarm_color, "alarm_color", {"r", "g", "b"});
     register_service(&EHMTX::set_text_color, "text_color", {"r", "g", "b"});
