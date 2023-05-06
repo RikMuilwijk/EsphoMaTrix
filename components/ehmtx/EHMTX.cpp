@@ -688,7 +688,6 @@ namespace esphome
 
       if (this->show_indicator)
       {
-        this->display->line(31, 5, 29, 7, this->indicator_color);
         this->display->draw_pixel_at(30, 7, this->indicator_color);
         this->display->draw_pixel_at(31, 6, this->indicator_color);
         this->display->draw_pixel_at(31, 7, this->indicator_color);
