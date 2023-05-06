@@ -696,12 +696,12 @@ namespace esphome
 
       if (this->show_indicator1)
       {
-        this->display->draw_pixel_at(0, 0, this->indicator1_color);
+        this->display->draw_pixel_at(29, 0, this->indicator1_color);
       }
 
       if (this->show_indicator2)
       {
-        this->display->draw_pixel_at(2, 0, this->indicator2_color);
+        this->display->draw_pixel_at(31, 0, this->indicator2_color);
       }
     }
   }
